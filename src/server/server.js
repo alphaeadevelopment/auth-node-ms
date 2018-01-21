@@ -1,12 +1,12 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import configureCors from './configure-cors';
-import config from '@alphaeadev/config-client';
+import { loadConfig } from '@alphaeadev/config-client';
 
-config.init('http://config-server-test.alphaea.uk', 'auth-node-ms', process.env.ENV)
-  .then(() => {
+loadConfig('http://config-server-test.alphaea.uk', 'auth-node-ms', process.env.ENV)
+  .then((config) => {
     const authRouter = require('./auth').default;
-    const port = Number(config.getOr('port', 3001));
+    const port = Number(config.port || 3001);
     const app = express();
     configureCors(app);
     app.use('/auth', authRouter);

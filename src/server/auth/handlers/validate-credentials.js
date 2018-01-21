@@ -16,7 +16,7 @@ export default ({ username, encryptedNonce, noncedPasswordDigest }) => {
             username,
           });
         }
-        res();
+        else res();
       })
       .catch((err) => rej(err));
   });

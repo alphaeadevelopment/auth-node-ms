@@ -25,6 +25,10 @@ var config = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.ENV': JSON.stringify(process.env.ENV),
+    }),
   ],
   externals: [nodeExternals()],
   target: 'web'

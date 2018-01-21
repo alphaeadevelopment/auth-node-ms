@@ -3,13 +3,13 @@
   "version": "1.0.1",
   "main": "index.js",
   "scripts": {
-    "serve": "node src/server/main.js",
+    "serve": "ENV=${ENV:-local} NODE_ENV=${NODE_ENV:-development} node src/server/main.js",
     "serve:dev": "nodemon src/server/main.js",
     "debug": "node --inspect-brk src/server/main.js",
     "build": "webpack",
     "deploy": "npm version patch && git push && git push --tags && cross-env ENV=${ENV:-test} VERSION=`jq .version package.json` AWS_SDK_LOAD_CONFIG=1 npm run deploy:inner",
     "deploy:inner": "npm run deploy:cf && npm run deploy:terminate-instances",
-    "deploy:cf": "echo Updating CloudFormation stack && node-cf-deploy update-stack --name CfAuthMs-${ENV} -P Env=${ENV} -P EnvVars=\"NODE_ENV=production ENV=${ENV}\" -P GitTag=v${VERSION} -P SubDomainName=auth-ms-${ENV} -P NodeModule=auth-node-ms -P BootstrapScriptName=node-bootstrap -f node_modules/\\@alphaeadev/cf-infra-code/cloudformation-templates/node-cf-template.json -S",
+    "deploy:cf": "echo Updating CloudFormation stack && node-cf-deploy update-stack --name CfAuthMs-${ENV} -P Env=${ENV} -P BuildEnv=${ENV} -P EnvVars=\"NODE_ENV=production ENV=${ENV}\" -P GitTag=v${VERSION} -P SubDomainName=auth-ms-${ENV} -P NodeModule=auth-node-ms -P BootstrapScriptName=node-bootstrap -f node_modules/\\@alphaeadev/cf-infra-code/cloudformation-templates/node-cf-template.json -S",
     "deploy:terminate-instances": "node-cf-deploy terminate-stack-instances -n CfAuthMs-${ENV}"
   },
   "keywords": [],
@@ -17,7 +17,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@alphaeadev/config-client": "^1.0.4",
+    "@alphaeadev/config-client": "^1.0.9",
     "@alphaeadev/crypto": "^1.0.0",
     "@alphaeadev/dynamo-db-dao": "^1.0.8",
     "body-parser": "^1.18.2",
@@ -26,7 +26,7 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "@alphaeadev/cf-infra-code": "^1.0.14",
+    "@alphaeadev/cf-infra-code": "^1.0.16",
     "@alphaeadev/node-cf-deploy": "^1.0.6",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
