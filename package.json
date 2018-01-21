@@ -1,6 +1,6 @@
 {
   "name": "@alpheadev/auth-node-ms",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "serve": "ENV=${ENV:-local} NODE_ENV=${NODE_ENV:-development} node src/server/main.js",
