@@ -1,7 +1,7 @@
 import { digest } from '@alphaeadev/crypto';
 import omit from 'lodash/omit';
 import { decrypt } from '../crypto';
-import dao from './auth-dynamo-dao';
+import dao from '../dao';
 
 export default ({ username, encryptedNonce, noncedPasswordDigest }) => {
   if (!username || !encryptedNonce || !noncedPasswordDigest) return null;

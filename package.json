@@ -4,8 +4,8 @@
   "main": "index.js",
   "scripts": {
     "serve": "ENV=${ENV:-local} NODE_ENV=${NODE_ENV:-development} node src/server/main.js",
-    "serve:dev": "nodemon src/server/main.js",
-    "debug": "node --inspect-brk src/server/main.js",
+    "serve:dev": "ENV=${ENV:-local} NODE_ENV=${NODE_ENV:-development} nodemon src/server/main.js",
+    "debug": "ENV=${ENV:-local} NODE_ENV=${NODE_ENV:-development} node  --inspect-brk src/server/main.js",
     "build": "webpack",
     "deploy": "npm version patch && git push && git push --tags && cross-env ENV=${ENV:-test} VERSION=`jq .version package.json` AWS_SDK_LOAD_CONFIG=1 npm run deploy:inner",
     "deploy:inner": "npm run deploy:cf && npm run deploy:terminate-instances",
